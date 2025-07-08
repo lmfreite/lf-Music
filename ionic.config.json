@@ -1,0 +1,7 @@
+{
+  "name": "lf-Music",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
