@@ -1,11 +1,10 @@
 <ion-header [translucent]="true">
-<ion-toolbar>
-  <ion-title class="ml-2">Home</ion-title>
-  <ion-buttons slot="end">
-    <app-theme></app-theme>
-  </ion-buttons>
-</ion-toolbar>
-
+  <ion-toolbar>
+    <ion-title class="ml-2">Home</ion-title>
+    <ion-buttons slot="end">
+      <app-theme></app-theme>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="h-screen max-h-screen">
@@ -22,17 +21,21 @@
         <swiper-slide
           class="flex flex-col items-center justify-center min-h-[400px] p-3 h-full"
         >
-          <div class="flex flex-col items-center w-full px-4">
-            <h2 class="text-3xl font-bold text-center mb-4 dark">{{ genre.title }}</h2>
+          <ion-card [color]="theme.isDarkMode() ? 'dark' : 'medium'">
             <img
-              class="max-w-[250px] max-h-[250px] mb-4"
+              class="w-full max-h-[250px] mb-4"
               [src]="genre.image"
               [alt]="genre.title"
             />
-            <p class="text-center max-w-2xs text-justify">
+            <ion-card-header>
+              <ion-card-title class="text-3xl font-bold text-center">
+                {{ genre.title }}
+              </ion-card-title>
+            </ion-card-header>
+            <ion-card-content class="text-center text-justify">
               {{ genre.description }}
-            </p>
-          </div>
+            </ion-card-content>
+          </ion-card>
         </swiper-slide>
         }
       </swiper-container>

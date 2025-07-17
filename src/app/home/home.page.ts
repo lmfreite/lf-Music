@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { ThemeComponent } from "../components/theme/theme.component";
+import { ThemeService } from 'src/services/theme/theme.service';
 
 @Component({
   selector: 'app-home',
@@ -32,5 +33,5 @@ genres = [
     }
   ];
 
-  constructor() {}
+  constructor(public theme: ThemeService) {}
 }
