@@ -33,6 +33,30 @@
 
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import '@ionic/angular/css/palettes/dark.system.css';
+
 
 @import "tailwindcss";
+
+/* En src/global.css o src/theme/variables.css (según tu estructura) */
+
+/* MODO CLARO: estilos normales, NO dentro de .dark */
+:root {
+  --ion-background-color: #ffffff;
+  --ion-text-color: #222428;
+
+  /* Ejemplo de acentos y primarios */
+  --ion-color-primary: #3880ff;
+  --ion-color-secondary: #3dc2ff;
+  --ion-color-tertiary: #5260ff;
+}
+
+/* MODO OSCURO: TODO lo que pongas dentro de .dark se aplica cuando el body tenga esa clase */
+.dark {
+  --ion-background-color: #18181b;
+  --ion-text-color: #f1f1f1;
+
+  --ion-color-primary: #5e99ff;
+  --ion-color-secondary: #70cfff;
+  --ion-color-tertiary: #788aff;
+  --swiper-navigation-color: #ffffff;
+}
