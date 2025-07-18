@@ -1,0 +1,35 @@
+<ion-content [fullscreen]="true" class="h-screen max-h-screen">
+    <div class="flex items-center justify-center h-full max-h-full">
+    <div
+      class="w-full max-w-lg h-full max-h-full flex items-center justify-center"
+    >
+      <swiper-container
+        loop="true"
+        navigation="true"
+        class="w-full h-full max-h-full"
+      >
+        @for (genre of genres; track $index) {
+        <swiper-slide
+          class="flex flex-col items-center justify-center min-h-[400px] p-3 h-full"
+        >
+          <ion-card [color]="_theme.isDarkMode() ? 'dark' : 'light'">
+            <img
+              class="w-full max-h-[250px] mb-4"
+              [src]="genre.image"
+              [alt]="genre.title"
+            />
+            <ion-card-header>
+              <ion-card-title class="text-3xl font-bold text-center">
+                {{ genre.title }}
+              </ion-card-title>
+            </ion-card-header>
+            <ion-card-content class="text-center text-justify">
+              {{ genre.description }}
+            </ion-card-content>
+          </ion-card>
+        </swiper-slide>
+        }
+      </swiper-container>
+    </div>
+  </div>
+</ion-content>
