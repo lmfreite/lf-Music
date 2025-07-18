@@ -11,7 +11,8 @@ export class ThemeComponent implements OnInit {
 
   constructor(private themeService: ThemeService) {}
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.themeService.init();
     this.isDark = this.themeService.isDarkMode();
   }
 

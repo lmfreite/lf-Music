@@ -33,5 +33,5 @@ genres = [
     }
   ];
 
-  constructor(public theme: ThemeService) {}
+  constructor(public _theme: ThemeService) {}
 }

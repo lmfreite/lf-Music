@@ -1,33 +1,36 @@
 import { Injectable } from '@angular/core';
+import { StorageService } from '../storage/storage.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ThemeService {
- private readonly storageKey = 'dark-mode';
+  private readonly storageKey = 'dark-mode';
 
-  constructor() {
-    this.initTheme();
-  }
+  constructor(private _storageService: StorageService) {}
 
-  // Aplica el tema según la preferencia almacenada o la del sistema
-  private initTheme() {
-    const saved = localStorage.getItem(this.storageKey);
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const enableDark = saved === 'true' || (saved === null && prefersDark);
-    this.setDarkMode(enableDark);
+  async init() {
+    let saved = await this._storageService.getItem(this.storageKey);
+    if (saved === null) {
+      saved = window.matchMedia('(prefers-color-scheme: dark)').matches
+        ? 'true'
+        : 'false';
+      await this._storageService.setItem(this.storageKey, saved);
+    }
+    const enableDark = saved === 'true';
+    document.body.classList.toggle('dark', enableDark);
   }
 
   // Cambia y almacena la preferencia
-  setDarkMode(enable: boolean) {
+  async setDarkMode(enable: boolean): Promise<void> {
     document.body.classList.toggle('dark', enable);
-    localStorage.setItem(this.storageKey, String(enable));
+    await this._storageService.setItem(this.storageKey, String(enable));
   }
 
   // Alterna modo claro/oscuro
-  toggle() {
+  async toggle(): Promise<void> {
     const isDark = document.body.classList.contains('dark');
-    this.setDarkMode(!isDark);
+    await this.setDarkMode(!isDark);
   }
 
   // Consulta el estado actual
