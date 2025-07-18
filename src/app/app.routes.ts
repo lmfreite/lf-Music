@@ -26,7 +26,7 @@ export const routes: Routes = [
             loadComponent: () => import('./components/search/search.component').then(m => m.SearchComponent),
           },
           {
-            path: '',
+            path: '**',
             redirectTo: 'home',
             pathMatch: 'full',
           },
