@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ILogin } from 'src/app/interfaces/ILogin';
-import { Observable, of } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { StorageService } from '../storage/storage.service';
 
 @Injectable({
@@ -11,14 +11,21 @@ export class AuthService {
   constructor(private _storageService: StorageService) { }
 
   loginUser(data: ILogin): Observable<boolean> {
-    const validEmail = 'lmfreite@gmail.com';
-    const validPassword = 'Colombia2024*';
+    return from(this.validateUser(data));
+  }
 
-    if (data.email === validEmail && data.password === validPassword) {
-      this._storageService.setItem('login', 'true');
-      return of(true);
+  private async validateUser(data: ILogin): Promise<boolean> {
+    const usuariosStr = await this._storageService.getItem('usuarios');
+    if (!usuariosStr) {
+      return false;
+    }
+    const usuarios = JSON.parse(usuariosStr);
+    const usuario = usuarios.find((u: any) => u.email === data.email && u.password === data.password);
+    if (usuario) {
+      await this._storageService.setItem('login', 'true');
+      return true;
     } else {
-      return of(false);
+      return false;
     }
   }
 }

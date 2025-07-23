@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonContent } from '@ionic/angular/standalone';
 import { NavController } from '@ionic/angular';
-import { PasswordValidator } from '../validators/password.validator';
 import { AuthService } from '../services/auth/auth.service';
 import { ToastController } from '@ionic/angular';
 
@@ -67,11 +66,6 @@ export class LoginPage implements OnInit {
   // Métodos para verificar errores
   get emailErrors() {
     const control = this.loginForm.get('email');
-    return control?.errors && control?.touched;
-  }
-
-  get passwordErrors() {
-    const control = this.loginForm.get('password');
     return control?.errors && control?.touched;
   }
 }

@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
-import { introGuard } from './guards/intro.guard';
 import { loginGuard } from './guards/login.guard';
+import { introGuard } from './guards/intro.guard';
+import { publicGuard } from './guards/public.guard';
 
 export const routes: Routes = [
   {
@@ -10,7 +11,13 @@ export const routes: Routes = [
   },
   {
     path: 'login',
-    loadComponent: () => import('./login/login.page').then(m => m.LoginPage)
+    loadComponent: () => import('./login/login.page').then(m => m.LoginPage),
+    canActivate: [publicGuard]
+  },
+  {
+    path: 'register',
+    loadComponent: () => import('./register/register.page').then(m => m.RegisterPage),
+    canActivate: [publicGuard]
   },
   {
     path: 'intro',

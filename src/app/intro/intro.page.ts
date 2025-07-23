@@ -61,6 +61,6 @@ export class IntroPage implements OnInit {
 
   async viewIntro() {
     await this._storageService.setItem('introSeen', 'true');
-     this.router.navigate(['/home']);
+    this.router.navigate(['/app/home']);
   }
 }

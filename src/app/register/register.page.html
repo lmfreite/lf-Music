@@ -1,0 +1,136 @@
+<ion-content [fullscreen]="true" class="bg-intro">
+  <div class="min-h-screen flex items-center justify-center p-4">
+    <div
+      class="bg-gray-900 border-[4px] border-blue-900 rounded-2xl hover:border-blue-500 transition-all duration-200 w-full max-w-md">
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()"
+        class="mx-auto flex items-center py-12 px-8 font-semibold text-gray-500 flex-col space-y-6">
+
+        <img class="w-40 h-40 rounded-full" src="/assets/music-27.svg" alt="Music Logo" />
+        <h1 class="text-white text-2xl text-center">Crea tu cuenta en lf-music</h1>
+
+        <div class="w-full space-y-4">
+          <!-- Campo Nombre -->
+          <div class="space-y-1">
+            <input
+              class="w-full p-3 bg-blue-900 rounded-md border transition-all duration-200 focus:outline-none focus:ring-2 placeholder-gray-400"
+              placeholder="Nombre" type="text" formControlName="name" />
+            @if (nameErrors) {
+            <div class="text-red-400 text-sm space-y-1">
+              @if (registerForm.get('name')?.errors?.['required']) {
+              <small class="block">El name es requerido</small>
+              }
+              @if (registerForm.get('name')?.errors?.['minlength']) {
+              <small class="block">Mínimo 2 caracteres</small>
+              }
+            </div>
+            }
+          </div>
+
+          <!-- Campo Apellido -->
+          <div class="space-y-1">
+            <input
+              class="w-full p-3 bg-blue-900 rounded-md border transition-all duration-200 focus:outline-none focus:ring-2 placeholder-gray-400"
+              placeholder="Apellido" type="text" formControlName="lastname" />
+            @if (lastnameErrors) {
+            <div class="text-red-400 text-sm space-y-1">
+              @if (registerForm.get('lastname')?.errors?.['required']) {
+              <small class="block">El lastname es requerido</small>
+              }
+              @if (registerForm.get('lastname')?.errors?.['minlength']) {
+              <small class="block">Mínimo 2 caracteres</small>
+              }
+            </div>
+            }
+          </div>
+
+          <!-- Campo Email -->
+          <div class="space-y-1">
+            <input
+              class="w-full p-3 bg-blue-900 rounded-md border transition-all duration-200 focus:outline-none focus:ring-2 placeholder-gray-400"
+              placeholder="Email" type="email" formControlName="email" />
+            @if (emailErrors) {
+            <div class="text-red-400 text-sm space-y-1">
+              @if (registerForm.get('email')?.errors?.['required']) {
+              <small class="block">El email es requerido</small>
+              }
+              @if (registerForm.get('email')?.errors?.['email']) {
+              <small class="block">Formato de email inválido</small>
+              }
+              @if (registerForm.get('email')?.errors?.['minlength']) {
+              <small class="block">Mínimo 6 caracteres</small>
+              }
+            </div>
+            }
+          </div>
+
+          <!-- Campo Password -->
+          <div class="space-y-1">
+            <input
+              class="w-full p-3 bg-blue-900 rounded-md border transition-all duration-200 focus:outline-none focus:ring-2 placeholder-gray-400"
+              placeholder="Contraseña" type="password" formControlName="password" />
+          </div>
+
+          <!-- Campo Confirmar Password -->
+          <div class="space-y-1">
+            <input
+              class="w-full p-3 bg-blue-900 rounded-md border transition-all duration-200 focus:outline-none focus:ring-2 placeholder-gray-400"
+              placeholder="Confirmar contraseña" type="password" formControlName="confirmPassword" />
+            @if (registerForm.get('confirmPassword')?.touched && registerForm.hasError('passwordMismatch')) {
+            <div class="text-red-400 text-xs">
+              Las contraseñas no coinciden
+            </div>
+            }
+          </div>
+          @if (passwordErrors) {
+            <div class="text-red-400 text-xs space-y-1">
+              @if (registerForm.get('password')?.errors?.['required']) {
+              <small class="block">La contraseña es requerida</small>
+              }
+              @if (registerForm.get('password')?.errors?.['passwordInvalid']) {
+              <div class="space-y-1">
+                <small class="block font-medium">La contraseña debe contener:</small>
+                <div class="ml-2 space-y-0.5">
+                  <small class="block"
+                    [class.text-green-400]="registerForm.get('password')?.errors?.['passwordInvalid']?.isValidLength"
+                    [class.text-red-400]="!registerForm.get('password')?.errors?.['passwordInvalid']?.isValidLength">
+                    • Mínimo 12 caracteres
+                  </small>
+                  <small class="block"
+                    [class.text-green-400]="registerForm.get('password')?.errors?.['passwordInvalid']?.hasUpperCase"
+                    [class.text-red-400]="!registerForm.get('password')?.errors?.['passwordInvalid']?.hasUpperCase">
+                    • Una mayúscula
+                  </small>
+                  <small class="block"
+                    [class.text-green-400]="registerForm.get('password')?.errors?.['passwordInvalid']?.hasLowerCase"
+                    [class.text-red-400]="!registerForm.get('password')?.errors?.['passwordInvalid']?.hasLowerCase">
+                    • Una minúscula
+                  </small>
+                  <small class="block"
+                    [class.text-green-400]="registerForm.get('password')?.errors?.['passwordInvalid']?.hasNumber"
+                    [class.text-red-400]="!registerForm.get('password')?.errors?.['passwordInvalid']?.hasNumber">
+                    • Un número
+                  </small>
+                  <small class="block"
+                    [class.text-green-400]="registerForm.get('password')?.errors?.['passwordInvalid']?.hasSpecialChar"
+                    [class.text-red-400]="!registerForm.get('password')?.errors?.['passwordInvalid']?.hasSpecialChar">
+                    • Un carácter especial
+                  </small>
+                </div>
+              </div>
+              }
+            </div>
+            }
+        </div>
+
+        <input
+          class="w-full p-2 bg-gray-50 rounded-full font-bold text-gray-900 border-[4px] border-gray-700 hover:border-blue-500 transition-all duration-200 cursor-pointer"
+          type="submit" value="Crear cuenta" [disabled]="!registerForm.valid" />
+
+        <p class="text-gray-400 text-sm text-center">
+          Already have an account?
+          <a class="font-semibold text-white hover:text-blue-500 transition-all duration-200" href="/login">Log in</a>
+        </p>
+      </form>
+    </div>
+  </div>
+</ion-content>
