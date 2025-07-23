@@ -1,113 +1,95 @@
 <ion-content [fullscreen]="true" class="bg-intro">
-<div class="min-h-screen flex items-center justify-center p-4">
-  <div
-    class="bg-gray-900 border-[4px] border-blue-900 rounded-2xl hover:border-blue-500 transition-all duration-200 w-full max-w-md"
-  >
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" 
-      class="mx-auto flex items-center py-12 px-8 font-semibold text-gray-500 flex-col space-y-6">
-      
-      <img
-        class="w-40 h-40 rounded-full"
-        src="/assets/music-27.svg"
-        alt="Music Logo"
-      />
-      <h1 class="text-white text-2xl text-center">Sign in to lf-music</h1>
-      
-      <div class="w-full space-y-4">
-        <!-- Campo Email -->
-        <div class="space-y-1">
-          <input
-            class="w-full p-3 bg-blue-900 rounded-md border transition-all duration-200 focus:outline-none focus:ring-2"
-            [class.border-red-500]="emailErrors"
-            [class.border-gray-700]="!emailErrors"
-            [class.focus:border-blue-700]="!emailErrors"
-            [class.focus:ring-blue-500]="!emailErrors"
-            [class.focus:ring-red-500]="emailErrors"
-            placeholder="Email"
-            type="email"
-            formControlName="email"
-          />
-          @if (emailErrors) {
+  <div class="min-h-screen flex items-center justify-center p-4">
+    <div
+      class="bg-gray-900 border-[4px] border-blue-900 rounded-2xl hover:border-blue-500 transition-all duration-200 w-full max-w-md">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()"
+        class="mx-auto flex items-center py-12 px-8 font-semibold text-gray-500 flex-col space-y-6">
+
+        <img class="w-40 h-40 rounded-full" src="/assets/music-27.svg" alt="Music Logo" />
+        <h1 class="text-white text-2xl text-center">Sign in to lf-music</h1>
+
+        <div class="w-full space-y-4">
+          <!-- Campo Email -->
+          <div class="space-y-1">
+            <input
+              class="w-full p-3 bg-blue-900 rounded-md border transition-all duration-200 focus:outline-none focus:ring-2 placeholder-gray-400"
+              [class.border-red-500]="emailErrors" [class.border-gray-700]="!emailErrors"
+              [class.focus:border-blue-700]="!emailErrors" [class.focus:ring-blue-500]="!emailErrors"
+              [class.focus:ring-red-500]="emailErrors" placeholder="Email" type="email" formControlName="email" />
+            @if (emailErrors) {
             <div class="text-red-400 text-sm space-y-1">
               @if (loginForm.get('email')?.errors?.['required']) {
-                <small class="block">El email es requerido</small>
+              <small class="block">El email es requerido</small>
               }
               @if (loginForm.get('email')?.errors?.['email']) {
-                <small class="block">Formato de email inválido</small>
+              <small class="block">Formato de email inválido</small>
               }
               @if (loginForm.get('email')?.errors?.['minlength']) {
-                <small class="block">Mínimo 6 caracteres</small>
+              <small class="block">Mínimo 6 caracteres</small>
               }
             </div>
-          }
-        </div>
+            }
+          </div>
 
-        <!-- Campo Password -->
-        <div class="space-y-1">
-          <input
-            class="w-full p-3 bg-blue-900 rounded-md border transition-all duration-200 focus:outline-none focus:ring-2"
-            [class.border-red-500]="passwordErrors"
-            [class.border-gray-700]="!passwordErrors"
-            [class.focus:border-blue-700]="!passwordErrors"
-            [class.focus:ring-blue-500]="!passwordErrors"
-            [class.focus:ring-red-500]="passwordErrors"
-            placeholder="Contraseña"
-            type="password"
-            formControlName="password"
-          />
-          @if (passwordErrors) {
+          <!-- Campo Password -->
+          <div class="space-y-1">
+            <input
+              class="w-full p-3 bg-blue-900 rounded-md border transition-all duration-200 focus:outline-none focus:ring-2 placeholder-gray-400"
+              [class.border-red-500]="passwordErrors" [class.border-gray-700]="!passwordErrors"
+              [class.focus:border-blue-700]="!passwordErrors" [class.focus:ring-blue-500]="!passwordErrors"
+              [class.focus:ring-red-500]="passwordErrors" placeholder="Contraseña" type="password"
+              formControlName="password" />
+            @if (passwordErrors) {
             <div class="text-red-400 text-xs space-y-1">
               @if (loginForm.get('password')?.errors?.['required']) {
-                <small class="block">La contraseña es requerida</small>
+              <small class="block">La contraseña es requerida</small>
               }
               @if (loginForm.get('password')?.errors?.['passwordInvalid']) {
-                <div class="space-y-1">
-                  <small class="block font-medium">La contraseña debe contener:</small>
-                  <div class="ml-2 space-y-0.5">
-                    <small 
-                      class="block"
-                      [class.text-green-400]="loginForm.get('password')?.errors?.['passwordInvalid']?.isValidLength"
-                      [class.text-red-400]="!loginForm.get('password')?.errors?.['passwordInvalid']?.isValidLength">
-                      • Mínimo 12 caracteres
-                    </small>
-                    <small 
-                      class="block"
-                      [class.text-green-400]="loginForm.get('password')?.errors?.['passwordInvalid']?.hasUpperCase"
-                      [class.text-red-400]="!loginForm.get('password')?.errors?.['passwordInvalid']?.hasUpperCase">
-                      • Una mayúscula
-                    </small>
-                    <small 
-                      class="block"
-                      [class.text-green-400]="loginForm.get('password')?.errors?.['passwordInvalid']?.hasLowerCase"
-                      [class.text-red-400]="!loginForm.get('password')?.errors?.['passwordInvalid']?.hasLowerCase">
-                      • Una minúscula
-                    </small>
-                    <small 
-                      class="block"
-                      [class.text-green-400]="loginForm.get('password')?.errors?.['passwordInvalid']?.hasNumber"
-                      [class.text-red-400]="!loginForm.get('password')?.errors?.['passwordInvalid']?.hasNumber">
-                      • Un número
-                    </small>
-                    <small 
-                      class="block"
-                      [class.text-green-400]="loginForm.get('password')?.errors?.['passwordInvalid']?.hasSpecialChar"
-                      [class.text-red-400]="!loginForm.get('password')?.errors?.['passwordInvalid']?.hasSpecialChar">
-                      • Un carácter especial
-                    </small>
-                  </div>
+              <div class="space-y-1">
+                <small class="block font-medium">La contraseña debe contener:</small>
+                <div class="ml-2 space-y-0.5">
+                  <small class="block"
+                    [class.text-green-400]="loginForm.get('password')?.errors?.['passwordInvalid']?.isValidLength"
+                    [class.text-red-400]="!loginForm.get('password')?.errors?.['passwordInvalid']?.isValidLength">
+                    • Mínimo 12 caracteres
+                  </small>
+                  <small class="block"
+                    [class.text-green-400]="loginForm.get('password')?.errors?.['passwordInvalid']?.hasUpperCase"
+                    [class.text-red-400]="!loginForm.get('password')?.errors?.['passwordInvalid']?.hasUpperCase">
+                    • Una mayúscula
+                  </small>
+                  <small class="block"
+                    [class.text-green-400]="loginForm.get('password')?.errors?.['passwordInvalid']?.hasLowerCase"
+                    [class.text-red-400]="!loginForm.get('password')?.errors?.['passwordInvalid']?.hasLowerCase">
+                    • Una minúscula
+                  </small>
+                  <small class="block"
+                    [class.text-green-400]="loginForm.get('password')?.errors?.['passwordInvalid']?.hasNumber"
+                    [class.text-red-400]="!loginForm.get('password')?.errors?.['passwordInvalid']?.hasNumber">
+                    • Un número
+                  </small>
+                  <small class="block"
+                    [class.text-green-400]="loginForm.get('password')?.errors?.['passwordInvalid']?.hasSpecialChar"
+                    [class.text-red-400]="!loginForm.get('password')?.errors?.['passwordInvalid']?.hasSpecialChar">
+                    • Un carácter especial
+                  </small>
                 </div>
+              </div>
               }
             </div>
-          }
+            }
+          </div>
         </div>
-      </div>
-      
-      <input
-        class="w-full p-2 bg-gray-50 rounded-full font-bold text-gray-900 border-[4px] border-gray-700 hover:border-blue-500 transition-all duration-200 cursor-pointer"
-        type="submit"
-        value="Enviar"
-      />
-    </form>
+
+        <input
+          class="w-full p-2 bg-gray-50 rounded-full font-bold text-gray-900 border-[4px] border-gray-700 hover:border-blue-500 transition-all duration-200 cursor-pointer"
+          type="submit" value="Enviar" [disabled]="!loginForm.valid" />
+
+        <p class="text-gray-400 text-sm text-center">
+          Don't have an account?
+          <a class="font-semibold text-white hover:text-blue-500 transition-all duration-200" href="/register">Sign
+            up</a>
+      </form>
+    </div>
   </div>
-</div>
 </ion-content>

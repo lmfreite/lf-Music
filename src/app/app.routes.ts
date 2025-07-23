@@ -1,19 +1,26 @@
 import { Routes } from '@angular/router';
 import { introGuard } from './guards/intro.guard';
+import { loginGuard } from './guards/login.guard';
 
 export const routes: Routes = [
   {
-    path: 'intro',
-    loadComponent: () => import('./intro/intro.page').then( m => m.IntroPage)
-  },
-    {
-    path: 'login',
-    loadComponent: () => import('./login/login.page').then( m => m.LoginPage)
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
   },
   {
-    path: '',
+    path: 'login',
+    loadComponent: () => import('./login/login.page').then(m => m.LoginPage)
+  },
+  {
+    path: 'intro',
+    loadComponent: () => import('./intro/intro.page').then(m => m.IntroPage),
+    canActivate: [loginGuard]
+  },
+  {
+    path: 'app',
     loadComponent: () => import('./components/tabs/tabs.component').then(m => m.TabsComponent),
-    canActivate: [introGuard],
+    canActivate: [loginGuard, introGuard],
     children: [
       {
         path: '',
@@ -46,7 +53,7 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: '',
+    redirectTo: 'login',
     pathMatch: 'full'
   }
 ];

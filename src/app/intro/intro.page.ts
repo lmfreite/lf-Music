@@ -59,8 +59,8 @@ export class IntroPage implements OnInit {
   ngOnInit() {
   }
 
-  viewIntro() {
-    this._storageService.setItem('introSeen', 'true');
-    this.router.navigate(['/home']);
+  async viewIntro() {
+    await this._storageService.setItem('introSeen', 'true');
+     this.router.navigate(['/home']);
   }
 }
