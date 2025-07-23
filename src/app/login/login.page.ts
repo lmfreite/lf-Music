@@ -5,6 +5,7 @@ import { IonContent } from '@ionic/angular/standalone';
 import { NavController } from '@ionic/angular';
 import { AuthService } from '../services/auth/auth.service';
 import { ToastController } from '@ionic/angular';
+import { StorageService } from '../services/storage/storage.service';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +23,8 @@ export class LoginPage implements OnInit {
     private formBuilder: FormBuilder,
     private _authService: AuthService,
     private navCtrl: NavController,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private _storageService: StorageService
   ) { 
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -47,16 +49,20 @@ export class LoginPage implements OnInit {
     if (this.loginForm.valid) {
       const loginData = this.loginForm.value;
       this._authService.loginUser(loginData).subscribe({
-        next: (success) => {
+        next: async (success) => {
           if (success) {
-            this.navCtrl.navigateForward('/intro');
+            const introSeen = await this._storageService.getItem('introSeen');
+            if (introSeen === 'true') {
+              this.navCtrl.navigateForward('/app/home');
+            } else {
+              this.navCtrl.navigateForward('/intro');
+            }
             this.presentToast('Inicio de sesión exitoso');
           } else {
             this.presentToast('Credenciales inválidas');
           }
         },
-        error: (err) => {
-          console.error('Error en el inicio de sesión:', err);
+        error: () => {
           this.presentToast('Error en el inicio de sesión');
         }
       });
