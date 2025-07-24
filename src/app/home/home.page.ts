@@ -7,6 +7,7 @@ import { ITracksResponse } from '../interfaces/ITracksResponse';
 import { ThemeService } from '../services/theme/theme.service';
 import { Subscription } from 'rxjs';
 import { HeaderComponent } from "../components/header/header.component";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +19,12 @@ export class HomePage implements OnInit {
   tracks: ITracksResponse[] = [];
   private subscription: Subscription = new Subscription();
 
-  constructor(private titleService: TitleService, private musicService: MusicService, public _theme: ThemeService) { }
+  constructor(
+    private titleService: TitleService,
+    private musicService: MusicService,
+    public _theme: ThemeService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.titleService.setTitle('Home');
@@ -45,5 +51,9 @@ export class HomePage implements OnInit {
     } else {
       return `${pad(minutes)}:${pad(seconds)}`;
     }
+  }
+
+  goToListenNow(track: ITracksResponse) {
+    this.router.navigate(['/app/play'], { state: { track } });
   }
 }

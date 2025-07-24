@@ -2,7 +2,7 @@
 <ion-content [fullscreen]="false" class="ion-padding">
   <ion-list>
     @for (track of tracks; track $index) {
-      <ion-item>
+      <ion-item (click)="goToListenNow(track)">
         <ion-label>
           <div 
             class="font-semibold text-lg"
