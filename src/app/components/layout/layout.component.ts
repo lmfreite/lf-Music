@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { HeaderComponent } from "../header/header.component";
 import { RouterOutlet } from "@angular/router";
+import { TabsComponent } from "../tabs/tabs.component";
 
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
-  imports: [HeaderComponent, RouterOutlet],
+  imports: [RouterOutlet, TabsComponent],
 })
 export class LayoutComponent  implements OnInit {
   title: string = 'My App';

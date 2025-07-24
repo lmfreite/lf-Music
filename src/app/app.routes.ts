@@ -26,35 +26,29 @@ export const routes: Routes = [
   },
   {
     path: 'app',
-    loadComponent: () => import('./components/tabs/tabs.component').then(m => m.TabsComponent),
+    loadComponent: () => import('./components/layout/layout.component').then(m => m.LayoutComponent),
     canActivate: [loginGuard, introGuard],
     children: [
       {
         path: '',
-        loadComponent: () => import('./components/layout/layout.component').then(m => m.LayoutComponent),
-        children: [
-          {
-            path: '',
-            redirectTo: 'home',
-            pathMatch: 'full'
-          },
-          {
-            path: 'home',
-            loadComponent: () => import('./home/home.page').then(m => m.HomePage),
-          },
-          {
-            path: 'play',
-            loadComponent: () => import('./components/listen-now/listen-now.component').then(m => m.ListenNowComponent),
-          },
-          {
-            path: 'genres',
-            loadComponent: () => import('./components/genres/genres.component').then(m => m.GenresComponent),
-          },
-          {
-            path: 'search',
-            loadComponent: () => import('./components/search/search.component').then(m => m.SearchComponent),
-          }
-        ]
+        redirectTo: 'home',
+        pathMatch: 'full'
+      },
+      {
+        path: 'home',
+        loadComponent: () => import('./home/home.page').then(m => m.HomePage),
+      },
+      {
+        path: 'play',
+        loadComponent: () => import('./components/listen-now/listen-now.component').then(m => m.ListenNowComponent),
+      },
+      {
+        path: 'albums',
+        loadComponent: () => import('./components/genres/genres.component').then(m => m.GenresComponent),
+      },
+      {
+        path: 'search',
+        loadComponent: () => import('./components/search/search.component').then(m => m.SearchComponent),
       }
     ]
   },

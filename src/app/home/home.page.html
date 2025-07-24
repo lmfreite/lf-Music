@@ -1,3 +1,19 @@
-<ion-content [fullscreen]="true" class="h-screen max-h-screen">
-
+<app-header></app-header>
+<ion-content [fullscreen]="false" class="ion-padding">
+  <ion-list>
+    @for (track of tracks; track $index) {
+      <ion-item>
+        <ion-label>
+          <div 
+            class="font-semibold text-lg"
+            [ngClass]="_theme.isDarkMode() ? 'text-white' : 'text-black'">
+            {{ track.name | titlecase }}
+          </div>
+          <div class="text-gray-400 text-sm">
+            Duración: {{ formatDuration(track.duration_ms) }}
+          </div>
+        </ion-label>
+      </ion-item>
+    }
+  </ion-list>
 </ion-content>
