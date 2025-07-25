@@ -8,6 +8,7 @@ import { ThemeService } from '../services/theme/theme.service';
 import { Subscription } from 'rxjs';
 import { HeaderComponent } from "../components/header/header.component";
 import { Router } from '@angular/router';
+import { ListenNowService } from '../services/listen-now/listen-now.service';
 
 @Component({
   selector: 'app-home',
@@ -23,7 +24,8 @@ export class HomePage implements OnInit {
     private titleService: TitleService,
     private musicService: MusicService,
     public _theme: ThemeService,
-    private router: Router
+    private router: Router,
+    private listenNowService: ListenNowService
   ) { }
 
   ngOnInit() {
@@ -59,6 +61,7 @@ export class HomePage implements OnInit {
   }
 
   goToListenNow(track: ITracksResponse) {
-    this.router.navigate(['/app/play'], { state: { track } });
+    this.listenNowService.play(track);
+    this.router.navigate(['/app/play'], { state: { track, tracks: this.tracks } });
   }
 }

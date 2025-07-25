@@ -5,7 +5,7 @@
       <ion-item (click)="goToListenNow(track)">
         <ion-label>
           <div 
-            class="font-semibold text-lg"
+            class="font-semibold text-lg cursor-pointer transition-transform duration-150 active:scale-95 hover:text-blue-400"
             [ngClass]="_theme.isDarkMode() ? 'text-white' : 'text-black'">
             {{ track.name | titlecase }}
           </div>
