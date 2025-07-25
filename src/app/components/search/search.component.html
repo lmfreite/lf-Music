@@ -1,4 +1,86 @@
 <app-header></app-header>
-<ion-content [fullscreen]="true" class="h-screen max-h-screen">
-  <div class="example-content">Search content</div>
+
+<ion-content [fullscreen]="true">
+  <ion-searchbar 
+    color="dark" 
+    animated="true" 
+    placeholder="Buscar canciones..." 
+    autocapitalize="off"
+    (ionInput)="onSearchInput($event)"
+    (ionClear)="onSearchClear()"
+    [value]="searchQuery"
+  ></ion-searchbar>
+
+  <!-- Estado de búsqueda en progreso -->
+  @if (isSearching) {
+    <div class="p-4">
+      @for (item of [1,2,3]; track $index) {
+        <ion-item class="mb-2">
+          <ion-skeleton-text animated style="width: 50px; height: 50px; border-radius: 8px; margin-right: 16px;"></ion-skeleton-text>
+          <ion-label>
+            <ion-skeleton-text animated style="width: 60%; height: 20px; margin-bottom: 8px;"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 40%; height: 16px;"></ion-skeleton-text>
+          </ion-label>
+        </ion-item>
+      }
+    </div>
+  }
+
+  <!-- Resultados de búsqueda -->
+  @else if (searchResults.length > 0) {
+      <ion-list class="ion-padding">
+        @for (track of searchResults; track $index) {
+          <ion-item 
+            (click)="goToListenNow(track)" 
+            class="cursor-pointer transition-transform duration-150 active:scale-95"
+          >
+            <ion-thumbnail slot="start">
+              <img 
+                [src]="track.preview_url || 'assets/images/default-album.png'" 
+                [alt]="track.name" 
+              />
+            </ion-thumbnail>
+            <ion-label>
+              <h2 class="font-semibold">{{ track.name }}</h2>
+              <p class="text-gray-500">
+                Duración: {{ formatDuration(track.duration_ms) }}
+              </p>
+            </ion-label>
+          </ion-item>
+        }
+      </ion-list>
+  }
+
+  <!-- Sin resultados -->
+  @else if (hasSearched && searchQuery.trim()) {
+    <div class="flex flex-col items-center justify-center h-64 p-8 text-center">
+      <ion-icon 
+        name="search-outline" 
+        class="text-6xl text-gray-400 mb-4"
+      ></ion-icon>
+      <h2 class="text-xl font-semibold mb-2 text-gray-600 dark:text-gray-400">
+        Sin resultados
+      </h2>
+      <p class="text-gray-500 dark:text-gray-500">
+        No se encontraron canciones para "{{ searchQuery }}"
+      </p>
+    </div>
+  }
+
+  <!-- Estado inicial -->
+  @else {
+    <div class="flex flex-col items-center justify-center h-64 p-8 text-center">
+      <ion-icon 
+        name="musical-notes-outline" 
+        class="text-6xl text-gray-400 mb-4"
+      ></ion-icon>
+      <h2 class="text-xl font-semibold mb-2 text-gray-600 dark:text-gray-400">
+        Busca tu música favorita
+      </h2>
+      <p class="text-gray-500 dark:text-gray-500">
+        Escribe el nombre de una canción para comenzar
+      </p>
+    </div>
+  }
+
 </ion-content>

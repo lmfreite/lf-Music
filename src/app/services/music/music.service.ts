@@ -107,4 +107,27 @@ export class MusicService {
         })
     );
   }
+
+  searchTracks(query: string): Observable<ITracksResponse[]> {
+    return from(
+      fetch(`${this.baseUrl}/search_track`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ q: query })
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Error al buscar las pistas');
+          }
+          return response.json();
+        })
+        .then((data: ITracksResponse[]) => data)
+        .catch(error => {
+          console.error('Error searching tracks:', error);
+          return [];
+        })
+    );
   }
+}
