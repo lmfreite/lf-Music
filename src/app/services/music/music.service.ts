@@ -55,4 +55,21 @@ export class MusicService {
       })
     );
   }
+
+  getTracksAlbumById(id: number): Observable<ITracksResponse[]> {
+    return from(
+      fetch(`${this.baseUrl}/tracks/album/${id}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Error al obtener el álbum');
+          }
+          return response.json();
+        })
+        .then((data: ITracksResponse[]) => data)
+        .catch(error => {
+          console.error('Error fetching album:', error);
+          return [];
+        })
+    );
+  }
 }

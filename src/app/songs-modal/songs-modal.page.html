@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Canciones</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">
+        <ion-icon name="close-circle-outline" size="large"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    @for (song of songs; track $index) {
+      <ion-item (click)="goToListenNow(song)">
+        <ion-label>
+          <h2 class="font-semibold text-lg cursor-pointer transition-transform duration-150 active:scale-95 hover:text-blue-400">{{ song.name }}</h2>
+          <div class="text-gray-400 text-sm">
+            Duración: {{ formatDuration(song.duration_ms) }}
+          </div>
+        </ion-label>
+      </ion-item>
+    }
+  </ion-list>
+</ion-content>

@@ -13,7 +13,8 @@
         <swiper-slide
           class="flex flex-col items-center justify-center min-h-[400px] p-3 h-full"
         >
-          <ion-card [color]="_theme.isDarkMode() ? 'dark' : 'light'">
+          <ion-card [color]="_theme.isDarkMode() ? 'dark' : 'light'"
+          (click)="getSongs(album.id)">
             <img
               class="w-full max-h-[250px] mb-4"
               [src]="album.image"
