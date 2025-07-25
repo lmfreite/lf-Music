@@ -1,61 +1,59 @@
 <app-header></app-header>
-<ion-content [fullscreen]="false" >
-    <div class="flex items-center justify-center h-full max-h-full">
-  <ion-card [ngClass]="_theme.isDarkMode() ? 'bg-black' : 'bg-white'" class="card mx-auto">
-    <div class="card__img">
-      <img src="/assets/music-27.svg" alt="music">
-    </div>
-    <div class="card__title">{{ track?.name }}</div>
-    <div class="card__wrapper">
-      <div class="card__time card__time-passed">{{ formatTime(currentTime) }}</div>
-      <div class="card__timeline">
-        <progress [value]="duration ? (currentTime / duration) * 100 : 0" max="100"></progress>
+<ion-content [fullscreen]="false">
+  <div class="flex items-center justify-center h-full max-h-full">
+    <ion-card [ngClass]="_theme.isDarkMode() ? 'bg-black' : 'bg-white'" class="card mx-auto">
+      <div class="card__img">
+        <img src="/assets/music-27.svg" alt="music">
       </div>
-      <div class="card__time card__time-left">{{ formatTime(duration - currentTime) }}</div>
-    </div>
-    <div class="card__wrapper">
-      <button class="card__btn">
-        <svg fill="none" height="12" viewBox="0 0 20 12" width="20"
-          xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-          <clipPath id="a">
-            <path d="m0 0h20v12h-20z"></path>
-          </clipPath>
-        </svg>
-      </button>
-      <button class="card__btn" (click)="goToPrev()">
-        <svg width="23" height="16" viewBox="0 0 23 16" fill="none"
-          xmlns="http://www.w3.org/2000/svg">
-          <path d="M11.5 8V0L0 8L11.5 16V8ZM23 0L11.5 8L23 16V0Z" fill="#fff"></path>
-        </svg>
-      </button>
-      <button (click)="isPlaying() ? goToStop() : goToPlay()" class="card__btn card__btn-play">
+      <div class="card__title">{{ track?.name }}</div>
+      <div class="card__wrapper">
+        <div class="card__time card__time-passed">{{ formatTime(currentTime) }}</div>
+        <div class="card__timeline">
+          <progress [value]="duration ? (currentTime / duration) * 100 : 0" max="100"></progress>
+        </div>
+        <div class="card__time card__time-left">{{ formatTime(duration - currentTime) }}</div>
+      </div>
+      <div class="card__wrapper">
+        <button class="card__btn">
+          <svg fill="none" height="12" viewBox="0 0 20 12" width="20" xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink">
+            <clipPath id="a">
+              <path d="m0 0h20v12h-20z"></path>
+            </clipPath>
+          </svg>
+        </button>
+        <button class="card__btn" (click)="goToPrev()">
+          <svg width="23" height="16" viewBox="0 0 23 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11.5 8V0L0 8L11.5 16V8ZM23 0L11.5 8L23 16V0Z" fill="#fff"></path>
+          </svg>
+        </button>
+        <button (click)="isPlaying() ? goToStop() : goToPlay()" class="card__btn card__btn-play">
 
-        @if (isPlaying()) {
-        <svg fill="none" height="22" viewBox="0 0 18 22" width="18" xmlns="http://www.w3.org/2000/svg">
-          <rect x="2" y="2" width="4" height="18" fill="#000" />
-          <rect x="12" y="2" width="4" height="18" fill="#000" />
-        </svg>
-        }@else{
-        <svg fill="none" height="22" viewBox="0 0 18 22" width="18" xmlns="http://www.w3.org/2000/svg">
-          <path d="m0 0v22l18-11z" fill="#000"></path>
-        </svg>
-        }
+          @if (isPlaying()) {
+          <svg fill="none" height="22" viewBox="0 0 18 22" width="18" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="2" width="4" height="18" fill="#000" />
+            <rect x="12" y="2" width="4" height="18" fill="#000" />
+          </svg>
+          }@else{
+          <svg fill="none" height="22" viewBox="0 0 18 22" width="18" xmlns="http://www.w3.org/2000/svg">
+            <path d="m0 0v22l18-11z" fill="#000"></path>
+          </svg>
+          }
 
-      </button>
-      <button class="card__btn" (click)="goToNext()">
-        <svg width="23" height="16" viewBox="0 0 23 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M11.5 8V0L23 8L11.5 16V8ZM0 0L11.5 8L0 16V0Z" fill="#fff"></path>
-        </svg>
-      </button>
-      <button class="card__btn">
-        <svg fill="#fff" height="20" viewBox="0 0 20 20" width="20"
-          xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-          <clipPath id="a">
-            <path d="m0 .5h20v19h-20z"></path>
-          </clipPath>
-        </svg>
-      </button>
-    </div>
-  </ion-card>
+        </button>
+        <button class="card__btn" (click)="goToNext()">
+          <svg width="23" height="16" viewBox="0 0 23 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11.5 8V0L23 8L11.5 16V8ZM0 0L11.5 8L0 16V0Z" fill="#fff"></path>
+          </svg>
+        </button>
+        <button class="card__btn" (click)="toggleFavorite()">
+          @if (isFavorite) {
+          <ion-icon name="heart" size="large"></ion-icon>
+          }@else {
+          <ion-icon name="heart-outline" size="large"></ion-icon>
+          }
+        </button>
+      </div>
+    </ion-card>
   </div>
 </ion-content>
