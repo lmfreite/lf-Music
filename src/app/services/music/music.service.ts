@@ -3,6 +3,8 @@ import { environment } from 'src/environments/environment';
 import { ITracksResponse } from 'src/app/interfaces/ITracksResponse';
 import { Observable, from } from 'rxjs';
 import { IAlbumsResponse } from 'src/app/interfaces/IAlbumsResponse';
+import * as dataArtist from 'src/assets/artistas.json'
+import { IArtistLocaleResponse } from 'src/app/interfaces/IArtistLocaleResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +45,14 @@ export class MusicService {
           console.error('Error fetching albums:', error);
           return [];
         })
+    );
+  }
+
+  getLocalArtists(): Observable<IArtistLocaleResponse[]> {
+    return from(
+      new Promise<IArtistLocaleResponse[]>(resolve => {
+        resolve([{ artists: (dataArtist as IArtistLocaleResponse).artists }]);
+      })
     );
   }
 }

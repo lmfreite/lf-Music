@@ -31,6 +31,11 @@ export class HomePage implements OnInit {
     this.subscription = this.musicService.getTracks().subscribe(tracks => {
       this.tracks = tracks.sort((a, b) => a.id - b.id);
     });
+
+    this.subscription = this.musicService.getLocalArtists().subscribe(artistsResponse => {
+      const artists = artistsResponse[0].artists;
+      console.log('Local Artists:', artists);
+    });
   }
 
   ngOnDestroy() {
