@@ -7,6 +7,8 @@ import { addIcons } from 'ionicons';
 import { logOutOutline } from 'ionicons/icons'; 
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { Router } from '@angular/router';
+import { MusicService } from 'src/app/services/music/music.service';
+import { ListenNowService } from 'src/app/services/listen-now/listen-now.service';
 
 
 @Component({
@@ -23,7 +25,8 @@ export class HeaderComponent  implements OnInit {
     public _theme: ThemeService,
     private alertController: AlertController,
     private storageService: StorageService,
-    private router: Router
+    private router: Router,
+    private listenNowService: ListenNowService,
   ) {addIcons({logOutOutline}); }
 
   ngOnInit() {
@@ -42,6 +45,7 @@ export class HeaderComponent  implements OnInit {
         {
           text: 'Log Out',
           handler: async () => {
+            this.listenNowService.stop();
             await this.storageService.removeItem('login');
             this.router.navigate(['/login']);
           }
