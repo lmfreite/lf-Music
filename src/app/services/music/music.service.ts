@@ -5,6 +5,7 @@ import { Observable, from } from 'rxjs';
 import { IAlbumsResponse } from 'src/app/interfaces/IAlbumsResponse';
 import * as dataArtist from 'src/assets/artistas.json'
 import { IArtistLocaleResponse } from 'src/app/interfaces/IArtistLocaleResponse';
+import { IArtistResponse } from 'src/app/interfaces/IArtistResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -72,4 +73,38 @@ export class MusicService {
         })
     );
   }
-}
+
+  getArtists(): Observable<IArtistResponse[]> {
+    return from(
+      fetch(`${this.baseUrl}/artists`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Error al obtener los artistas');
+          }
+          return response.json();
+        })
+        .then((data: IArtistResponse[]) => data)
+        .catch(error => {
+          console.error('Error fetching artists:', error);
+          return [];
+        })
+    );
+  }
+
+  getTracksArtistById(id: number): Observable<ITracksResponse[]> {
+    return from(
+      fetch(`${this.baseUrl}/tracks/artist/${id}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Error al obtener las pistas del artista');
+          }
+          return response.json();
+        })
+        .then((data: ITracksResponse[]) => data)
+        .catch(error => {
+          console.error('Error fetching artist tracks:', error);
+          return [];
+        })
+    );
+  }
+  }

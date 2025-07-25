@@ -57,12 +57,17 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'artists',
+        loadComponent: () =>
+          import('./artists/artists.page').then((m) => m.ArtistsPage),
+      },
+      {
         path: 'search',
         loadComponent: () =>
           import('./components/search/search.component').then(
             (m) => m.SearchComponent
           ),
-      }
+      },
     ],
   },
   {
