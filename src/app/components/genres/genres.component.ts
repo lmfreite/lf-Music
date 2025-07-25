@@ -1,12 +1,12 @@
-import { Component, OnInit,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { IonContent, ModalController } from '@ionic/angular/standalone'; // <-- Agrega ModalController aquí
+import { Component, OnInit, OnDestroy, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { IonContent, ModalController } from '@ionic/angular/standalone';
 import { Subscription } from 'rxjs';
 import { IAlbumsResponse } from 'src/app/interfaces/IAlbumsResponse';
 import { MusicService } from 'src/app/services/music/music.service';
 import { ThemeService } from 'src/app/services/theme/theme.service';
 import { TitleService } from 'src/app/services/title/title.service';
 import { HeaderComponent } from "../header/header.component";
-import { SongsModalPage } from 'src/app/songs-modal/songs-modal.page'; // Ajusta la ruta si es necesario
+import { SongsModalPage } from 'src/app/songs-modal/songs-modal.page';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -15,13 +15,16 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./genres.component.scss'],
   imports: [IonContent, HeaderComponent, CommonModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
-
-
 })
-export class GenresComponent  implements OnInit {
+export class GenresComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
-
+  
   albums: IAlbumsResponse[] = [];
+  
+  // Estados para manejar loading y error
+  isLoading = true;
+  hasError = false;
+
   constructor(
     public _theme: ThemeService,
     private titleService: TitleService,
@@ -31,8 +34,23 @@ export class GenresComponent  implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle('Albums');
-    this.subscription = this.musicService.getAlbums().subscribe(albums => {
-      this.albums = albums.sort((a, b) => a.id - b.id);
+    this.loadAlbums();
+  }
+
+  loadAlbums() {
+    this.isLoading = true;
+    this.hasError = false;
+    
+    this.subscription = this.musicService.getAlbums().subscribe({
+      next: (albums) => {
+        this.albums = albums.sort((a, b) => a.id - b.id);
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error loading albums:', error);
+        this.hasError = true;
+        this.isLoading = false;
+      }
     });
   }
 
@@ -52,5 +70,4 @@ export class GenresComponent  implements OnInit {
       await modal.present();
     });
   }
-
 }
