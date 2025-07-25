@@ -19,6 +19,11 @@ import { ListenNowService } from '../services/listen-now/listen-now.service';
 export class HomePage implements OnInit {
   tracks: ITracksResponse[] = [];
   private subscription: Subscription = new Subscription();
+  
+  // Estados para manejar loading y error
+  isLoading = true;
+  hasError = false;
+  errorMessage = '';
 
   constructor(
     private titleService: TitleService,
@@ -30,14 +35,32 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle('Home');
-    this.subscription = this.musicService.getTracks().subscribe(tracks => {
-      this.tracks = tracks.sort((a, b) => a.id - b.id);
+    this.loadTracks();
+  }
+
+  loadTracks() {
+    this.isLoading = true;
+    this.hasError = false;
+    
+    this.subscription = this.musicService.getTracks().subscribe({
+      next: (tracks) => {
+        this.tracks = tracks.sort((a, b) => a.id - b.id);
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error loading tracks:', error);
+        this.hasError = true;
+        this.isLoading = false;
+        this.errorMessage = 'No se pudieron cargar las canciones';
+      }
     });
 
-    this.subscription = this.musicService.getLocalArtists().subscribe(artistsResponse => {
-      const artists = artistsResponse[0].artists;
-      console.log('Local Artists:', artists);
-    });
+    this.subscription.add(
+      this.musicService.getLocalArtists().subscribe(artistsResponse => {
+        const artists = artistsResponse[0].artists;
+        console.log('Local Artists:', artists);
+      })
+    );
   }
 
   ngOnDestroy() {
@@ -63,5 +86,10 @@ export class HomePage implements OnInit {
   goToListenNow(track: ITracksResponse) {
     this.listenNowService.play(track);
     this.router.navigate(['/app/play'], { state: { track, tracks: this.tracks } });
+  }
+
+  // Método para reintentar cargar los datos
+  retry() {
+    this.loadTracks();
   }
 }

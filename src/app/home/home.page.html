@@ -1,19 +1,50 @@
 <app-header></app-header>
 <ion-content [fullscreen]="false" class="ion-padding">
   <ion-list>
-    @for (track of tracks; track $index) {
-      <ion-item (click)="goToListenNow(track)">
+    @if (isLoading) {
+    @for (item of [1,2,3,4,5,6]; track $index) {
+    <ion-list>
+      <ion-list-header>
+        <ion-skeleton-text [animated]="true" style="width: 80px"></ion-skeleton-text>
+      </ion-list-header>
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+        </ion-thumbnail>
         <ion-label>
-          <div 
-            class="font-semibold text-lg cursor-pointer transition-transform duration-150 active:scale-95 hover:text-blue-400"
-            [ngClass]="_theme.isDarkMode() ? 'text-white' : 'text-black'">
-            {{ track.name | titlecase }}
-          </div>
-          <div class="text-gray-400 text-sm">
-            Duración: {{ formatDuration(track.duration_ms) }}
-          </div>
+          <h3>
+            <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
+          </h3>
+          <p>
+            <ion-skeleton-text [animated]="true" style="width: 60%;"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text [animated]="true" style="width: 30%;"></ion-skeleton-text>
+          </p>
         </ion-label>
       </ion-item>
+    </ion-list>
+    }
+    } @else if (hasError) {
+    <div class="flex flex-col items-center justify-center h-full p-8 text-center">
+      <img src="assets/break.svg" alt="Error"  />
+    </div>
+    }@else {
+    @for (track of tracks; track $index) {
+    <ion-item (click)="goToListenNow(track)">
+      <ion-label>
+        <div
+          class="font-semibold text-lg cursor-pointer transition-transform duration-150 active:scale-95 hover:text-blue-400"
+          [ngClass]="_theme.isDarkMode() ? 'text-white' : 'text-black'">
+          {{ track.name | titlecase }}
+        </div>
+        <div class="text-gray-400 text-sm">
+          Duración: {{ formatDuration(track.duration_ms) }}
+        </div>
+      </ion-label>
+    </ion-item>
+    }
+
     }
   </ion-list>
 </ion-content>
