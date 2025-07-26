@@ -30,7 +30,7 @@
           <div class="space-y-1">
             <input
               class="w-full p-3 bg-blue-900 rounded-md border transition-all duration-200 focus:outline-none focus:ring-2 placeholder-gray-400"
-              placeholder="Apellido" type="text" formControlName="lastname" />
+              placeholder="Apellido" type="text" formControlName="last_name" />
             @if (lastnameErrors) {
             <div class="text-red-400 text-sm space-y-1">
               @if (registerForm.get('lastname')?.errors?.['required']) {
@@ -74,7 +74,7 @@
           <div class="space-y-1">
             <input
               class="w-full p-3 bg-blue-900 rounded-md border transition-all duration-200 focus:outline-none focus:ring-2 placeholder-gray-400"
-              placeholder="Confirmar contraseña" type="password" formControlName="confirmPassword" />
+              placeholder="Confirmar contraseña" type="password" formControlName="password_confirmation" />
             @if (registerForm.get('confirmPassword')?.touched && registerForm.hasError('passwordMismatch')) {
             <div class="text-red-400 text-xs">
               Las contraseñas no coinciden

@@ -14,6 +14,7 @@ import { PasswordValidator } from '../validators/password.validator';
 import { RegisterService } from '../services/register/register.service';
 import { ToastController } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
+import { IRegister } from '../interfaces/IRegister';
 
 @Component({
   selector: 'app-register',
@@ -35,13 +36,13 @@ export class RegisterPage implements OnInit {
     this.registerForm = this.formBuilder.group(
       {
         name: ['', [Validators.required, Validators.minLength(2)]],
-        lastname: ['', [Validators.required, Validators.minLength(2)]],
+        last_name: ['', [Validators.required, Validators.minLength(2)]],
         email: [
           '',
           [Validators.required, Validators.email, Validators.minLength(6)],
         ],
         password: ['', [Validators.required, PasswordValidator]],
-        confirmPassword: ['', Validators.required],
+        password_confirmation: ['', Validators.required],
       },
       { validators: this.passwordsMatchValidator }
     );
@@ -91,8 +92,17 @@ export class RegisterPage implements OnInit {
 
   onSubmit() {
     if (this.registerForm.valid) {
-      const registerData = this.registerForm.value;
-      this.registerService.registerUser(registerData).subscribe({
+      const formData = this.registerForm.value;
+      const registerData: IRegister = {
+        user: {
+          name: formData.name,
+          last_name: formData.lastname,
+          email: formData.email,
+          password: formData.password,
+          password_confirmation: formData.password_confirmation,
+        },
+      };
+      this.registerService.register(registerData).subscribe({
         next: (result) => {
           if (result === true) {
             this.navCtrl.navigateForward('/login');

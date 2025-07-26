@@ -1,7 +1,11 @@
 export interface IRegister {
-  name: string;
-  lastname: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
+    user: User;
+}
+
+export interface User {
+    email:                 string;
+    password:              string;
+    password_confirmation: string;
+    name:                  string;
+    last_name:             string;
 }

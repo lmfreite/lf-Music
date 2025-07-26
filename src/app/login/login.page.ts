@@ -6,6 +6,7 @@ import { NavController } from '@ionic/angular';
 import { AuthService } from '../services/auth/auth.service';
 import { ToastController } from '@ionic/angular';
 import { StorageService } from '../services/storage/storage.service';
+import { ILogin } from '../interfaces/ILogin';
 
 @Component({
   selector: 'app-login',
@@ -47,8 +48,16 @@ export class LoginPage implements OnInit {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      const loginData = this.loginForm.value;
-      this._authService.loginUser(loginData).subscribe({
+    const formData = this.loginForm.value;
+    const loginData: ILogin = {
+      user: {
+        email: formData.email,
+        password: formData.password
+      }
+    };
+      console.log('Login Data:', loginData);
+      
+      this._authService.login(loginData).subscribe({
         next: async (success) => {
           if (success) {
             const introSeen = await this._storageService.getItem('introSeen');
