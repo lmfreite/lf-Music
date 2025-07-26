@@ -7,7 +7,6 @@ import { addIcons } from 'ionicons';
 import { logOutOutline } from 'ionicons/icons'; 
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { Router } from '@angular/router';
-import { MusicService } from 'src/app/services/music/music.service';
 import { ListenNowService } from 'src/app/services/listen-now/listen-now.service';
 
 

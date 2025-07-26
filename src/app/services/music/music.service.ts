@@ -115,7 +115,9 @@ export class MusicService {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ q: query })
+        body: JSON.stringify({ 
+          track: { q: query } 
+        })
       })
         .then(response => {
           if (!response.ok) {

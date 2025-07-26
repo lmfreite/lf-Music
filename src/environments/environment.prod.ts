@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://music.fly.dev'
+  apiUrl: 'https://music.fly.dev'
 };
